@@ -8,7 +8,7 @@ sudo vi /etc/ssh/sshd_config
 PermitRootLogin yes
 # Only allow root to run commands over ssh, no shell
 #PermitRootLogin forced-commands-only
-…
+â€¦
 # To disable tunneled clear text passwords, change to no here!
 PasswordAuthentication yes
 #PermitEmptyPasswords no
@@ -39,6 +39,9 @@ Launch slave agents via JNLP => Manage Jenkins => Configure Global Security => A
 --------------------------------------------
 
 
+wget http://18.184.41.124:8080/jnlpJars/agent.jar
+
+java -jar agent.jar -jnlpUrl http://18.184.41.124:8080/computer/slave02/slave-agent.jnlp -workDir "/var/lib/agent02"
 
 
 
