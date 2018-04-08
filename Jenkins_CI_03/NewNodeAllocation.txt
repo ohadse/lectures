@@ -33,8 +33,9 @@ Remote Directory Name => /var/lib/agent01
 
 Labels => centos
 
-Launch slave agents vis SSH => Add credentials
+Launch slave agents via SSH => Add credentials
 
+Launch slave agents via JNLP => Manage Jenkins => Configure Global Security => Agents, JNLP (fixed: 5000)
 --------------------------------------------
 
 
