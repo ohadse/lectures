@@ -1,0 +1,120 @@
+* Git overview
+	- git init
+	- git status
+	- git branch
+	- git checkout branch
+	- git checkout -b branch
+	- git ull
+	- git fetch 
+	- git merge
+
+* Github
+	- create account
+	- create reo
+	- 
+
+* Jenkins
+	- install Jenkins
+	- manage lugins (JUnit , Github, Jenkins Simple Theme Plugin)
+	- manage users
+	- create job
+	- run job in arrallel
+	- junit test results
+
+In the simplest terms, git pull does a git fetch followed by a git merge.
+
+You can do a git fetch at any time to update your remote-tracking branches under refs/remotes/<remote>/.
+This operation never changes any of your own local branches under refs/heads, and is safe to do without changing your working copy. I have even heard of people running git fetch periodically in a cron job in the background (although I wouldn't recommend doing this).
+A git pull is what you would do to bring a local branch up-to-date with its remote version, while also updating your other remote-tracking branches.
+
+Install Jenkins Simple Theme Plugin
+
+http://afonsof.com/jenkins-material-theme/
+https://cdn.rawgit.com/afonsof/jenkins-material-theme/gh-pages/dist/material-cyan.css
+
+
+
+Jenkins Webhooks and Polling
+============================
+
+Polling
+-------
+Freestyle project => SCM => Git : add repository URL
+
+JOB configuration => Build Triggers => Poll SCM => H/15 * * * *
+
+Problems? overhead
+
+
+WebHook
+-------
+Plugins => install Github Integration plugin
+
+JOB configuration => GitHub project => Paste the github URL
+
+Build triggers => Build when a change is pushed to GitHub
+
+Github Settings => Integration & services => Add service => jenkins => http://18.197.121.93/github-webhook
+
+
+
+
+
+Install Jenkins on CentOS 7 (https://justpaste.it/1iv4e)
+===========================
+1. install epel-lealease repositry
+   - The EPEL repository is an additional package repository that provides easy access to install packages for commonly used software
+command: sudo yum install epel-release
+
+2. update installed pakages to the latest version - keeping a system up to date is a best practice (security updates etc')
+command: sudo yum update
+
+3. Install Java - before you can install Jenkins, you need to setup a Java virtual machine on your system
+command: sudo yum install java-1.8.0-openjdk.x86_64
+
+4. Set JAVA_HOME and JRE_HOME environmnet variables:
+
+When bash is invoked as an interactive login shell, or as a non-interactive shell with the --login option, 
+it first reads and executes commands from the file /etc/profile, if that file exists. After reading that file, 
+it looks for ~/.bash_profile, ~/.bash_login, and ~/.profile
+
+sudo cp /etc/profile /etc/profile_backup
+echo 'export JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk' | sudo tee -a /etc/profile
+echo 'export JRE_HOME=/usr/lib/jvm/jre' | sudo tee -a /etc/profile
+source /etc/profile
+
+5. Install Jenkins
+
+cd ~ 
+sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+yum install jenkins
+
+sudo systemctl start jenkins.service
+sudo systemctl enable jenkins.service
+
+sudo firewall-cmd --zone=public --permanent --add-port=8080/tcp
+sudo firewall-cmd --reload
+
+
+SCRIPT
+------------------------------------------------------------------------------------------------------
+sudo yum -y update
+sudo yum install -y wget epel-release java-1.8.0-openjdk.x86_64 git maven
+sudo cp /etc/profile /etc/profile_backup
+sudo echo 'export JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk' | sudo tee -a /etc/profile
+sudo echo 'export JRE_HOME=/usr/lib/jvm/jre' | sudo tee -a /etc/profile
+sudo source /etc/profile
+sudo pushd ~
+sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+sudo yum -y install jenkins
+sudo systemctl start jenkins.service
+sudo systemctl enable jenkins.service
+sudo firewall-cmd --zone=public --permanent --add-port=8080/tcp
+sudo firewall-cmd --reload
+popd
+------------------------------------------------------------------------------------------------------
+
+http://18.197.121.93:8080
+

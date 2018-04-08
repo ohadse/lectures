@@ -1,0 +1,21 @@
+
+# Params
+AWS_PEM_FILE=~/Downloads/jb_eaas.pem
+REMOTE_IP_ADDR=18.184.41.124
+
+# Create Jenkins folder backup file
+#tar -czf jenkins_backup.tgz /var/lib/jenkins/
+
+pushd /var/lib
+
+# Copy Jenkins Backup file to local machine
+sudo scp -i ${AWS_PEM_FILE} centos@${REMOTE_IP_ADDR}:/var/lib/jenkins_backup.tgz .
+
+# Extract Jenkins backup file and override jenkins folder
+tar -xzf jenkins_backup.tgz
+
+# Restart jenkins service
+service jenkins restart
+
+popd
+
